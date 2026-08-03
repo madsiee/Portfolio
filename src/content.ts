@@ -68,7 +68,7 @@ export const content = {
     alias: '( Marketing Manager )',
     roles: ['Marketing', 'Brand', 'Growth', 'Strategy'],
     /** Place your photo at \public\Portrait.png */
-    portrait: '/Portrait.png',
+portrait: `${import.meta.env.BASE_URL}Portrait.png`,
   },
 
   pitch: {
