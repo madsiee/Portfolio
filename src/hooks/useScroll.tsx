@@ -36,6 +36,8 @@ const ScrollContext = createContext<ScrollApi | null>(null)
 /** Virtual scroll length — denser when many one-by-one item beats */
 export const SCROLL_VH = Math.max(1200, BEAT_COUNT * 95)
 
+/** Touch drags cover less distance than wheel scrolls, so boost their effect */
+const TOUCH_SENSITIVITY = 2.4
 function isScrollBlockedTarget(target: EventTarget | null) {
   if (!(target instanceof Element)) return false
   return Boolean(target.closest('.modal-backdrop, .case-wide, input, textarea, select'))
@@ -78,7 +80,7 @@ export function ScrollProvider({ children }: { children: ReactNode }) {
       const max = maxScroll()
       if (max <= 0) return
       e.preventDefault()
-      scrollStore.nudgeTarget(dy / max)
+      scrollStore.nudgeTarget((dy / max) * TOUCH_SENSITIVITY)
     }
 
     const onTouchEnd = () => {
